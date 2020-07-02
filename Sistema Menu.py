@@ -14,6 +14,11 @@ def botaoAgenda():
     FrameAgendar.place(x=0,y=0)
 
 
+def back():
+    FramePrincipal.place(x=0,y=0)
+    FrameAgendar.place(x=1000,y=1000)
+
+
 #Frame de principal(frame do menu/inicio do programa)
 FramePrincipal = Frame(janela,width=800, height=500, bg='white')
 FramePrincipal.place(x=0,y=0)
@@ -60,11 +65,36 @@ labelagenda.pack()
 #entrys e label da agenda
 tituloAgendar = Label(FrameAgendar, text="Agendamento Cliente",font=('Times New Roman',28),bg="white")
 tituloAgendar.place(x=460,y=15)
-nomeLabel = Label(FrameAgendar, text="Nome Completo",font=('Times New Roman',13),bg="gold2")
+nomeLabel = Label(FrameAgendar, text="Nome Completo:",font=('Times New Roman',13),bg="gold2")
 nomeLabel.place(x=60,y=170)
+cpfLabel = Label(FrameAgendar, text="CPF:",font=('Times New Roman',13),bg="gold2")
+cpfLabel.place(x=144,y=210)
+numberLabel = Label(FrameAgendar, text="Número Celular:",font=('Times New Roman',13),bg="gold2")
+numberLabel.place(x=66,y=250)
+dataLabel = Label(FrameAgendar, text="Data Da Consulta:",font=('Times New Roman',13),bg="gold2")
+dataLabel.place(x=58,y=290)
+profLabel = Label(FrameAgendar, text="Profissional:",font=('Times New Roman',13),bg="gold2")
+profLabel.place(x=93,y=330)
+avisoLabel = Label(FrameAgendar, text="Todas as informações necessitam está preenchidas e corretas!",font=('Times New Roman',13),bg="gold2")
+avisoLabel.place(x=80,y=455)
 
 
+nomeEntry = Entry(FrameAgendar,width=30)
+nomeEntry.place(x=200,y=172)
+cpfEntry = Entry(FrameAgendar,width=30)
+cpfEntry.place(x=200,y=212)
+numberEntry = Entry(FrameAgendar,width=30)
+numberEntry.place(x=200,y=252)
+dataEntry = Entry(FrameAgendar,width=30)
+dataEntry.place(x=200,y=292)
+profEntry = Entry(FrameAgendar,width=30)
+profEntry.place(x=200,y=332)
 
+#botoes da agenda
+agendarButton = Button(FrameAgendar,text='Agendar',fg = "blue4", bg = "orange",width = 20, height=3)
+agendarButton.place(x=550,y=170)
+voltarButton = Button(FrameAgendar,text='Voltar',fg = "blue4", bg = "orange",width = 20, height=3,command=back)
+voltarButton.place(x=550,y=270)
 
 
 janela.mainloop()
