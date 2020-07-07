@@ -9,6 +9,7 @@ janela = Tk()
 janela.title('Sistema de Agendamento (nome da empresa)')
 janela.geometry('800x500')
 janela.configure(background='white')
+janela.iconbitmap("icone.ico")
 janela.resizable(width=False, height=False)
 
 #Funcoes
@@ -18,11 +19,15 @@ def botaoAgenda():
 def botaoConsulta():
     FrameConsulta.place(x=0,y=0)
 
+def botaoDelete():
+    FrameDeletar.place(x=0,y=0)
+
 
 def back():
     FramePrincipal.place(x=0,y=0)
     FrameAgendar.place(x=1000,y=1000)
     FrameConsulta.place(x=1000,y=1000)
+    FrameDeletar.place(x=1000,y=1000)
 
     ListaCpf.delete(0,END)
     nomeEntry.delete(0,END)
@@ -80,6 +85,16 @@ def consultaCpf():
     ListaCpf.insert(1," | ".join(var))
     Entrycpf.delete(0,END)
     conn.close()
+
+def deletarCliente():
+    conn = sqlite3.connect("clientes.db")
+    cursor = conn.cursor()
+    Cpf = entryDelete.get()
+    cursor.execute("""DELETE FROM clientes WHERE Cpf= ?""",(Cpf,))
+    conn.commit()
+    conn.close()
+    messagebox.showinfo(title='Aviso',message='Deletado com sucesso(conferir na parte de consulta)')
+    entryDelete.delete(0,END)
     
 
 
@@ -107,7 +122,7 @@ Agendar.place(x=90,y=155)
 Consultar = Button(FramePrincipal, text='Consultar Agendamentos',fg = "blue4",bg = "orange", width = 20,height=3,command=botaoConsulta)
 Consultar.place(x=330, y=155)
 
-Remover = Button(FramePrincipal, text='Remover Agendamentos', fg = "blue4",bg = "orange", width = 20,height=3)
+Remover = Button(FramePrincipal, text='Remover Agendamentos', fg = "blue4",bg = "orange", width = 20,height=3,command=botaoDelete)
 Remover.place(x=565,y=155)
 
 descricao1 = Label(FramePrincipal, text='Agendar um cliente por vez e adicionar o profissional que vai atendê-lo,hórario e dia da sua consulta',font=('Times New Roman',13),bg="gold2")
@@ -175,6 +190,8 @@ voltarButton.place(x=550,y=270)
 
 
 
+
+
 #Frame consultar atendimentos
 FrameConsulta = Frame(janela,width=800,height=500, bg='white')
 FrameConsulta.place(x=1000,y=2000)
@@ -185,7 +202,7 @@ photoConsulta = PhotoImage(file="arteconsulta.png")
 labelConsulta = Label(FrameConsulta, image=photoConsulta)
 labelConsulta.pack()
 
-#list box
+#Listbox,Entry e Labels
 Labelfundo1 = Label(FrameConsulta,width = 70,height=2,bg="LightBlue")
 Labelfundo1.place(x=70,y=90)
 Labelfundo1 = Label(FrameConsulta,width = 70,height=2,bg="LightBlue")
@@ -208,6 +225,37 @@ voltarButton = Button(FrameConsulta,text='Voltar',fg = "blue4", bg = "orange",wi
 voltarButton.place(x=598,y=290)
 
 
+
+
+
+
+
+
+#framedeletar
+FrameDeletar = Frame(janela,width=800,height=500, bg='white')
+FrameDeletar.place(x=1000,y=2000)
+FrameDeletar.propagate(0)
+
+#background
+photoDelete = PhotoImage(file="artedeletar.png")
+labelDelete = Label(FrameDeletar,image=photoDelete)
+labelDelete.pack()
+
+#Labels,Entry e Botoes
+tituloDelete = Label(FrameDeletar, text="Deletar Agendamentos",font=('Times New Roman',28),bg="white")
+tituloDelete.place(x=430,y=15)
+labelAviso = Label(FrameDeletar, text="Remover clientes já atendidos ou consultas canceladas e remarcadas.",font=('Times New Roman',13),bg="gold2")
+labelAviso.place(x=80,y=452)
+labelDelete = Label(FrameDeletar, text="Insira O Cpf Do Cliente Que Deseja Deletar",font=('Times New Roman',18),bg="blue4",fg="white")
+labelDelete.place(x=200,y=120)
+labelFundoDelete = Label(FrameDeletar,width = 30,height=2,bg="LightCyan2")
+labelFundoDelete.place(x=305,y=192)
+entryDelete = Entry(FrameDeletar,width=30)
+entryDelete.place(x=320,y=200)
+ButtonDelete = Button(FrameDeletar,text='Deletar',fg = "blue4", bg = "orange",width = 20,height=3,command=deletarCliente)
+ButtonDelete.place(x=340,y=260)
+Buttonvolta = Button(FrameDeletar,text='Voltar',fg = "blue4", bg = "orange",width = 20,height=3,command=back)
+Buttonvolta.place(x=340,y=340)
 
 
 janela.mainloop()
